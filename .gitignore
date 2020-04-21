@@ -170,6 +170,7 @@ packages/
 
 # Generated documentation folder
 docs/output/
+docs/reference/
 
 # Temp folder used for publishing docs
 temp/
