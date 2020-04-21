@@ -356,3 +356,8 @@ module LazyList =
             | true -> equalsWith fEquality xs1 xs2
             | false -> false
         | Cons _, Nil | Nil, Cons _ -> false
+
+[<Extension>]
+type LazyList<'T> with
+  static member Map(l : LazyList<'T>, f: 'T -> 'U) : LazyList<'U> =
+    LazyList.map f l

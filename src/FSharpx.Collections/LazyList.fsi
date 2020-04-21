@@ -56,6 +56,8 @@ type LazyList<'T> =
     ///O(1). Returns option tuple of head element and tail of the list.
     member TryUncons : ('T * LazyList<'T>) option
 
+    static member Map : LazyList<'T> * ('T -> 'U) -> LazyList<'U>
+
 [<RequireQualifiedAccess>]
 module LazyList =
 

@@ -3,6 +3,7 @@
 // https://raw.github.com/fsharp/powerpack/master/src/FSharp.PowerPack.Unittests/LazyListTests.fs
 
 open FSharpx.Collections
+open FSharpPlus
 open Expecto
 open Expecto.Flip
 open System.Collections.Generic
@@ -290,4 +291,7 @@ module LazyList =
 
             test "scan 3" {Expect.equal "scan" [0;1;3] (LazyList.scan (+) 0 (LazyList.ofList [1;2]) |> LazyList.toList) }
             test "scan 0" {Expect.equal "scan" [0] (LazyList.scan (+) 0 (LazyList.ofList [])  |> LazyList.toList) }
+
+            test "F#+ map" {Expect.equal "F#+ map" [1 ; 2] (LazyList.ofList [0;1] |> map ((+) 1) |> LazyList.toList)}
+            test "F#+ map on empty" {Expect.equal "F#+ map on empty" [] (LazyList.ofList [] |> map ((+)1) |> LazyList.toList)}
         ]

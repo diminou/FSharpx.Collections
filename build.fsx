@@ -51,7 +51,7 @@ let solutionFile  = "FSharpx.Collections.sln"
 let configuration = "Release"
 
 // Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/**/bin/Release/net47/*Tests.exe"
+let testAssemblies = "tests/**/bin/Release/net472/*Tests.exe"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted
