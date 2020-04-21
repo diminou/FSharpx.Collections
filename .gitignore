@@ -3,6 +3,9 @@
 
 .vs/
 
+# Ionide
+.ionide/
+
 # User-specific files
 *.suo
 *.user
