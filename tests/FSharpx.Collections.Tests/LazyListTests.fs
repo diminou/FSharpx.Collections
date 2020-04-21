@@ -294,4 +294,11 @@ module LazyList =
 
             test "F#+ map" {Expect.equal "F#+ map" [1 ; 2] (LazyList.ofList [0;1] |> map ((+) 1) |> LazyList.toList)}
             test "F#+ map on empty" {Expect.equal "F#+ map on empty" [] (LazyList.ofList [] |> map ((+)1) |> LazyList.toList)}
+            test "F#+ unzip" {Expect.equal "F#+ unzip" ([1], [2]) (LazyList.ofList [(1, 2)] |> unzip |> (fun (x, y) -> (LazyList.toList x, LazyList.toList y)))}
+            test "F#+ unzip on empty" {
+                let emptyLL: LazyList<int * byte> = LazyList.empty
+                let emptyLists: (int list) * (byte list) = ([], [])
+                let unzipped = emptyLL |> unzip |> (fun (x, y) -> (LazyList.toList x, LazyList.toList y))
+                Expect.equal "F#+ unzip on empty" emptyLists unzipped
+            }
         ]

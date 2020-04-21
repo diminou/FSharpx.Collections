@@ -361,3 +361,5 @@ module LazyList =
 type LazyList<'T> with
   static member Map(l : LazyList<'T>, f: 'T -> 'U) : LazyList<'U> =
     LazyList.map f l
+  static member Unzip(l : LazyList<'T * 'U>) : LazyList<'T> * LazyList<'U> =
+    LazyList.map fst l, LazyList.map snd l
