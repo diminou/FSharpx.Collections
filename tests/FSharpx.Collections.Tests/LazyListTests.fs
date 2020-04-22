@@ -292,6 +292,7 @@ module LazyList =
             test "scan 3" {Expect.equal "scan" [0;1;3] (LazyList.scan (+) 0 (LazyList.ofList [1;2]) |> LazyList.toList) }
             test "scan 0" {Expect.equal "scan" [0] (LazyList.scan (+) 0 (LazyList.ofList [])  |> LazyList.toList) }
 
+            // F#+ compatibility tests
             test "F#+ map" {Expect.equal "F#+ map" [1 ; 2] (LazyList.ofList [0;1] |> map ((+) 1) |> LazyList.toList)}
             test "F#+ map on empty" {Expect.equal "F#+ map on empty" [] (LazyList.ofList [] |> map ((+)1) |> LazyList.toList)}
             test "F#+ unzip" {Expect.equal "F#+ unzip" ([1], [2]) (LazyList.ofList [(1, 2)] |> unzip |> (fun (x, y) -> (LazyList.toList x, LazyList.toList y)))}
@@ -300,5 +301,9 @@ module LazyList =
                 let emptyLists: (int list) * (byte list) = ([], [])
                 let unzipped = emptyLL |> unzip |> (fun (x, y) -> (LazyList.toList x, LazyList.toList y))
                 Expect.equal "F#+ unzip on empty" emptyLists unzipped
+            }
+            test "F#+ toSeq" {
+                let expected = [1 .. 5]
+                Expect.equal "F#+ toSeq" expected (LazyList.ofSeq expected |> toSeq |> List.ofSeq)
             }
         ]

@@ -6,6 +6,7 @@
 namespace FSharpx.Collections
 
 open System
+open System.ComponentModel
 open System.Collections.Generic
 
 #nowarn "40" // recursive initialization
@@ -359,7 +360,32 @@ module LazyList =
 
 [<Extension>]
 type LazyList<'T> with
+  // Compatibility with generic F#+ map (Functor)
+  [<EditorBrowsable(EditorBrowsableState.Never)>]
   static member Map(l : LazyList<'T>, f: 'T -> 'U) : LazyList<'U> =
     LazyList.map f l
+
+  // Compatibility with generic F#+ unzip (Functor)
+  [<EditorBrowsable(EditorBrowsableState.Never)>]
   static member Unzip(l : LazyList<'T * 'U>) : LazyList<'T> * LazyList<'U> =
     LazyList.map fst l, LazyList.map snd l
+
+  // Compatibility with generic F#+ toSeq (Foldable)
+  [<EditorBrowsable(EditorBrowsableState.Never)>]
+  static member ToSeq (l : LazyList<'T>) : 'T seq =
+    LazyList.toSeq l
+
+  // Compatibility with F#+ get_Zero (Monoid)
+  [<EditorBrowsable(EditorBrowsableState.Never)>]
+  static member inline get_Zero() : LazyList<'T> =
+    LazyList.empty
+
+  // Compatibility with F#+ (+) (Monoid / Semigroup)
+  [<EditorBrowsable(EditorBrowsableState.Never)>]
+  static member inline ``+`` (x : LazyList<'T>, y : LazyList<'T>): LazyList<'T> =
+    LazyList.append x y
+
+  // Compatibility with F#+ Sum (Monoid / Semigroup)
+  [<EditorBrowsable(EditorBrowsableState.Never)>]
+  static member Sum (ls : seq<LazyList<'T>>): LazyList<'T> =
+    LazyList.ofSeq ls |> LazyList.concat

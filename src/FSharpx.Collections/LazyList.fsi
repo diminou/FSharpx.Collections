@@ -6,6 +6,7 @@
 namespace FSharpx.Collections
 
 open System.Collections.Generic
+open System.ComponentModel
 
 /// LazyLists are possibly-infinite, cached sequences.  See also IEnumerable/Seq for
 /// uncached sequences. LazyLists normally involve delayed computations without
@@ -56,11 +57,32 @@ type LazyList<'T> =
     ///O(1). Returns option tuple of head element and tail of the list.
     member TryUncons : ('T * LazyList<'T>) option
 
-    /// F#+ integration static member Map
+    /// F#+ integration
+
+    /// F#+ integration static member Map (Functor)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
     static member Map : LazyList<'T> * ('T -> 'U) -> LazyList<'U>
 
-    /// F#+ integration static member Unzip
+    /// F#+ integration static member Unzip (Functor)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
     static member Unzip : LazyList<'T * 'U> -> LazyList<'T> * LazyList<'U>
+
+    /// F#+ static member ToSeq (Foldable)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
+    static member ToSeq : LazyList<'T> -> 'T seq
+
+    /// F#+ get_Zero (Monoid)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
+    static member inline get_Zero : unit -> LazyList<'T>
+
+    /// F#+ (+) (Semigroup & Monoid)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
+    static member inline ``+`` :  x:LazyList<'T> * y:LazyList<'T> -> LazyList<'T>
+
+    /// F#+ Sum (Monoid)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
+    static member Sum : seq<LazyList<'T>> -> LazyList<'T>
+
 
 [<RequireQualifiedAccess>]
 module LazyList =
