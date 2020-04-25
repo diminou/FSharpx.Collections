@@ -107,3 +107,24 @@ module NonEmptyList =
     [<CompiledName("Zip")>]
     let zip list1 list2 =
         { List = List.zip list1.List list2.List }
+
+
+open System.ComponentModel
+
+[<Extension>]
+type NonEmptyList<'T> with
+    // F#+ compatibility - Map (Functor)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
+    static member inline Map(l : NonEmptyList<'T>, f : 'T -> 'U): NonEmptyList<'U> =
+        NonEmptyList.map f l
+
+    // F#+ compatibility - ToSeq (Foldable)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
+    static member inline ToSeq(l : NonEmptyList<'T>) : 'T seq =
+        NonEmptyList.toSeq l
+
+    
+    // F#+ compatibility - + (Semigroup)
+    [<EditorBrowsable(EditorBrowsableState.Never)>]
+    static member inline (+) (x : NonEmptyList<'T>, y : NonEmptyList<'T>) : NonEmptyList<'T> =
+        NonEmptyList.append x y

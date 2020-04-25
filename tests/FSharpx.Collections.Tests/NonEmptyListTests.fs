@@ -1,5 +1,7 @@
 ﻿namespace FSharpx.Collections.Tests
 
+open FSharpPlus
+
 open FsCheck
 open Expecto
 open Expecto.Flip
@@ -191,4 +193,31 @@ module NonEmptyListTests =
                     Expect.throwsT<System.ArgumentException> 
                         (sprintf "length %i; length %i" nel1.Length nel2.Length)
                         (fun () -> NonEmptyList.zip nel1 nel2 |> ignore) )
+
+            
+            // F#+ compatibility
+            test "F#+ map" {
+                let source = [ 1 .. 10 ]
+                let inc i = i + 1
+                let expected = List.map inc source
+                let observed = NonEmptyList.ofList source |> map inc |> NonEmptyList.toList
+                Expect.sequenceEqual "F#+ map failed on NEL" expected observed
+            }
+            
+            test "F#+ toSeq" {
+                let source = [1 .. 10]
+                let expected = Seq.ofList source
+                let observed = NonEmptyList.ofList source |> toSeq
+                Expect.sequenceEqual "F#+ seq failed on NEL" expected observed
+            }
+
+            test "F#+ +" {
+                let source1 = [1 .. 10]
+                let source2 = [11 .. 20]
+                let expected = List.append source1 source2
+                let observed =
+                    NonEmptyList.ofList source1 + (NonEmptyList.ofList source2)
+                    |> NonEmptyList.toList
+                Expect.sequenceEqual "F#+ + failed on NEL" expected observed
+            }
         ]
